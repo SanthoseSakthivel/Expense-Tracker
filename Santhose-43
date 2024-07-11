@@ -1,0 +1,111 @@
+ import java.util.ArrayList;
+import java.util.Scanner;
+class Expense {
+    private String category;
+    private double amount;
+    private String date;
+       
+    public Expense(String category, double amount, String date) {
+        this.category = category;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Category: " + category + ", Amount: $" + amount + ", Date: " + date;
+    }
+}
+
+public class Tracker {
+    private static ArrayList<Expense> expenses = new ArrayList<>();
+    private static double totalExpenses = 0;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\nExpense Tracker Menu:");
+            System.out.println("1. Add Expense");
+            System.out.println("2. View Expenses");
+            System.out.println("3. Delete Expense");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // Consume newline character
+
+            switch (choice) {
+                case 1:
+                    addExpense(scanner);
+                    break;
+                case 2:
+                    viewExpenses();
+                    break;
+                case 3:
+                    deleteExpense(scanner);
+                    break;
+                case 4:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+            }
+        }
+
+        System.out.println("Exiting Expense Tracker. Goodbye!");
+        scanner.close();
+    }
+
+    private static void addExpense(Scanner scanner) {
+        System.out.print("Enter expense category: ");
+        String category = scanner.nextLine();
+
+        System.out.print("Enter expense amount: $");
+        double amount = scanner.nextDouble();
+        scanner.nextLine();  // Consume newline character
+
+        System.out.print("Enter expense date (MM/DD/YYYY): ");
+        String date = scanner.nextLine();
+
+        Expense expense = new Expense(category, amount, date);
+        expenses.add(expense);
+        totalExpenses += amount;
+
+        System.out.println("Expense added successfully.");
+    }
+
+    private static void viewExpenses() {
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses recorded yet.");
+        } else {
+            System.out.println("\n--- Expenses ---");
+            for (Expense expense : expenses) {
+                System.out.println(expense);
+            }
+            System.out.println("Total Expenses: $" + totalExpenses);
+        }
+    }
+
+    private static void deleteExpense(Scanner scanner) {
+        viewExpenses();
+        if (!expenses.isEmpty()) {
+            System.out.print("Enter index of expense to delete: ");
+            int index = scanner.nextInt();
+            scanner.nextLine();  // Consume newline character
+
+            if (index >= 0 && index < expenses.size()) {
+                Expense deletedExpense = expenses.remove(index);
+                totalExpenses -= deletedExpense.getAmount();
+                System.out.println("Expense deleted successfully.");
+            } else {
+                System.out.println("Invalid index.");
+            }
+        }
+    }
+}
