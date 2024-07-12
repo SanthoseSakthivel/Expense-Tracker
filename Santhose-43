@@ -68,7 +68,7 @@ public class Tracker {
 
         System.out.print("Enter expense amount: $");
         double amount = scanner.nextDouble();
-        scanner.nextLine();  // Consume newline character
+        scanner.nextLine();
 
         System.out.print("Enter expense date (MM/DD/YYYY): ");
         String date = scanner.nextLine();
@@ -97,7 +97,7 @@ public class Tracker {
         if (!expenses.isEmpty()) {
             System.out.print("Enter index of expense to delete: ");
             int index = scanner.nextInt();
-            scanner.nextLine();  // Consume newline character
+            scanner.nextLine(); 
 
             if (index >= 0 && index < expenses.size()) {
                 Expense deletedExpense = expenses.remove(index);
